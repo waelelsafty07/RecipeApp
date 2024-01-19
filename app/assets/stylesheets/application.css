@@ -13,3 +13,77 @@
  *= require_tree .
  *= require_self
  */
+ 
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#is_public{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin: 1rem 0 ;
+}
+
+.add-button{
+    border: 1px solid #000;
+    padding: 1rem;
+}
+
+.user-sign-in-link ul{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+h2,h1{
+    text-align: center;
+}
+
+.recipe{
+    width: 100%;
+    border: 1px solid #000;
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+.d-flex{
+    display: flex;
+}
+
+.recipe_name{
+    width: 30%;
+}
+
+.recipe_description{
+    display: 70%;
+}
+
+.Remove{
+    margin: 1rem 0;
+}
+
+#recipe_id{
+    display: flex;
+}
+
+.created_by{
+    width: 30%;
+}
+
+.price{
+    width: 70%;
+}
+
+.recipe_data{
+    width: 100%;
+    justify-content: space-between;
+    margin: 1rem 0;
+}

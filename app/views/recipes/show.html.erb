@@ -18,11 +18,17 @@
   <p class="time"><%= @recipe.editing_times? ? @recipe.cooking_time : "cooking_time: #{@recipe.cooking_time} hours" %></p>
   <p class="steps">Steps go here...</p>
 </div>
-
+<div class="d-flex recipe_data" >
+<div >
 <%= link_to "Generate shopping list", general_shopping_list_path, class: 'btn btn-primary'  %>
+</div>
 <% if current_user == @recipe.user%>
+<div>
 <%= link_to "Add ingredient", new_recipe_recipe_food_path(recipe_id: @recipe.id), class: 'btn btn-primary'  %>
+</div>
+</div>
 <% end %>
+
 <% if @recipe.recipe_foods.includes(:food).any? %>
 <div class="tableDiv">
 <table>

@@ -1,91 +1,72 @@
 class RecipesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_recipe, only: %i[show edit update destroy toggle_public add_food create_food]
+  before_action :set_recipe, only: %i[show edit update destroy]
 
+  # GET /recipes or /recipes.json
   def index
-    @recipes = current_user.recipes
-    @public_recipes = Recipe.where(public: true).order(created_at: :desc)
+    @recipes = Recipe.all
   end
 
+  # GET /recipes/1 or /recipes/1.json
   def show
-    @recipe = Recipe.includes(recipe_foods: :food).find(params[:id])
-    @recipe_foods = @recipe.recipe_foods
-    @user = current_user
-    @food = Food.new if current_user == @recipe.user
+    @recipe = Recipe.find(params[:id])
   end
 
+  # GET /recipes/new
   def new
     @recipe = Recipe.new
   end
 
+  # GET /recipes/1/edit
+  def edit; end
+
+  # POST /recipes or /recipes.json
   def create
+    # @food = Food.new(food_params)
     @recipe = current_user.recipes.build(recipe_params)
+
     if @recipe.save
-      redirect_to recipes_url, notice: 'Recipe was successfully created.'
+      # Post successfully created
+      flash[:notice] = 'Recipe created successfully.'
+      redirect_to recipes_path
     else
+      # Handle validation errors
+      flash[:notice] = 'Recipe not created successfully.'
       render :new
     end
   end
 
-  def edit
+  # PATCH/PUT /recipes/1 or /recipes/1.json
+  def update
     @recipe = Recipe.find(params[:id])
+    if @recipe.update(recipe_params)
+      redirect_to @recipe, notice: 'Recipe updated successfully.'
+    else
+      render :edit
+    end
   end
 
+  # DELETE /recipes/1 or /recipes/1.json
   def destroy
     @recipe = Recipe.find(params[:id])
-
-    if current_user == @recipe.user
-      @recipe.destroy
-      redirect_to recipes_url, notice: 'Recipe was successfully deleted.'
-    else
-      redirect_to recipes_url, alert: 'You are not authorized to delete this recipe.'
-    end
+    @recipe.destroy
+    redirect_to recipes_path, notice: 'Recipe was successfully deleted.'
   end
 
   def toggle_public
     @recipe = Recipe.find(params[:id])
-
-    if current_user == @recipe.user
-      @recipe.toggle!(:public)
-
-      notice_message = if @recipe.public?
-                         'Recipe is now public.'
-                       else
-                         'Recipe is now private.'
-                       end
-    else
-      notice_message = 'You are not authorized to update this recipe.'
-    end
-
-    redirect_to recipe_path(@recipe), notice: notice_message
+    @recipe.update(public: !@recipe.public)
+    redirect_to @recipe, notice: 'Recipe was successfully updated.'
   end
 
   private
 
+  # Use callbacks to share common setup or constraints between actions.
   def set_recipe
     @recipe = Recipe.find(params[:id])
   end
 
+  # Only allow a list of trusted parameters through.
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :preparation_time, :cooking_time, :public, :user_id)
-  end
-
-  def food_params
-    params.require(:food).permit(:name, :quantity, :unit)
-  end
-
-  def shopping_list
-    @recipe = Recipe.find(params[:id])
-    @recipe_foods = @recipe.recipe_foods
-  end
-
-  def add_ingredient
-    @recipe = Recipe.find(params[:id])
-    @food = Food.new
-  end
-
-  def public_recipes
-    @public_recipes = Recipe.where(public: true).order(created_at: :desc)
-    render 'public_index'
+    params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
   end
 end

@@ -32,7 +32,6 @@ end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root}/spec/fixtures"
-  config.include FactoryBot::Syntax::Methods
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -60,8 +59,5 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
-  # config.filter_gems_from_backtrace('gem name')
+  # config.filter_gems_from_backtrace("gem name")
 end
-# Watch the test run in the browser
-Capybara.default_driver = :selenium_chrome
-Webdrivers::Chromedriver.required_version = 'C:\Program Files\Google\Chrome\Application\chrome.exe'

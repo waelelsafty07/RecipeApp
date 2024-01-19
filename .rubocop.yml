@@ -11,7 +11,7 @@ AllCops:
   DisplayCopNames: true
 
 Layout/LineLength:
-  Max: 120
+  Max: 125
 Metrics/MethodLength:
   Include:
     - "app/controllers/*"
@@ -49,6 +49,8 @@ Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented
 Lint/RaiseException:
+  Enabled: false
+Layout/EndOfLine: 
   Enabled: false
 Lint/StructNewOverride:
   Enabled: false

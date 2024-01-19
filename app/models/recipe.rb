@@ -4,9 +4,12 @@ class Recipe < ApplicationRecord
   has_many :foods, through: :recipe_foods
 
   validates :name, presence: true
-  validates :description, presence: true
 
-  def editing_times?
-    preparation_time.nil? && cooking_time.nil?
+  def total_price
+    total = 0
+    foods.each do |food|
+      total += food.price * food.quantity
+    end
+    total
   end
 end

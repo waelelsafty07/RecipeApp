@@ -1,9 +1,9 @@
-<h1>New recipe</h1>
-
+<div class="new-form-container">
+<div class="form-container">
+<div class="back">
+  <h3>Add a new Recipe</h3>
+  <%= link_to "Back", recipes_path %>
+</div>
 <%= render "form", recipe: @recipe %>
-
-<br>
-
-<div>
-  <%= link_to "Back to recipes", recipes_path, class: 'back-link' %>
+</div>
 </div>

@@ -1,28 +1,30 @@
-<h2>Avaliable food</h2>
-<div class="tableDiv">
-<div id="is_public"><%= link_to 'Add Food', new_food_path, class: "add-button" %></div>
-<% if @foods.any? %>
-<table>
+<p style="color: green"><%= notice %></p>
+<%= stylesheet_link_tag 'foods', media: 'all' %>
+
+<div class="food-container">
+
+<div class="new-food-container">
+<%= link_to "New food", new_food_path, class: "link-btn btn-hover"%>
+</div>
+
+<% if @foods.empty? %>
+<p>No food</p>
+<% else %>
+<table class="table-container">
   <thead>
     <tr>
-      <th>Food </th>
-      <th>Measurement unit</th>
-      <th>Unit price</th>
+      <th>Food</th>
+      <th>Measurement Unit</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
-  <% @foods.each do |food| %>
-    <tr>
-      <td><%= food.name %></td>
-      <td><%= food.measurement_unit %></td>
-      <td>$<%= food.price %></td>
-      <td class="Delete"><%= button_to "Delete Food", food_path(food), method: :delete, data: { confirm: "Are you sure?" } %></td>
-    </tr>
-  <% end %>
+    <% @foods.each do |food| %>
+      <%= render food %>
+    <% end %>
   </tbody>
 </table>
-</div>
-<% else %>
-   <p>There is no food you have.</p>
 <% end %>
+</div>

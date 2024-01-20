@@ -1,0 +1,46 @@
+<%= stylesheet_link_tag 'recipes', media: 'all' %>
+<%= stylesheet_link_tag 'foods', media: 'all' %>
+
+<p style="color: green"><%= notice %></p>
+<h1 class="text-center"><%= @recipe.name %></h2>
+<div class="d-flex justify-content-between px-5 py-3">
+  <div>
+    <p>Preparation time: <%= @recipe.preparation_time %> hour(s)</p>
+    <p>Cooking time: <%= @recipe.cooking_time %> minute(s)</p>
+    <p>Description: <%= @recipe.description %></p>
+  </div>
+<%= form_for @recipe, url: { action: :toggle_public }, method: :patch do |f| %>
+  <%= f.label :public, "Public" %>
+  <%= f.check_box :public, {}, true, false %>
+  <%= f.submit "Save", class: "save" %>
+<% end %>
+</div>
+
+<div class="d-flex justify-content-between p-3 pt-5">
+<% if can? :create, @recipe %>
+  <%= button_to "Generate shopping list", general_shopping_list_path, params: { recipe_id: @recipe.id }, method: :get, class: "btn btn-primary" %>
+  <%= link_to 'Add Ingredient', new_recipe_food_path, class: "btn btn-primary" %>
+<% end %>
+</div>
+<hr/>
+
+  <div class="food-container">
+    <div class="food-header">
+      <h2>Ingredients</h2>
+    </div>
+    <table class="w-100">
+      <thead>
+        <tr>
+          <th>Food</th>
+          <th>Quantity</th>
+          <th>Value</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recipe.recipe_foods.each do |recipe_food| %>
+          <%= render recipe_food %>
+        <% end %>
+      </tbody>
+  </div>
+</div>

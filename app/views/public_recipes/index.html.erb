@@ -1,0 +1,21 @@
+<h1 class="text-center fw-bold">Public Recipes</h1>
+<div class="public-recipes">
+  <% if @public_recipes.present? %>
+    <% @public_recipes.each do |recipe| %>
+      <div class="border shadow py-3 px-5 m-5 row bg-white">
+        <div class="col-5">
+          <a href = "<%= recipe_path(id: recipe.id) %>" class="mb-3"><h4><%= recipe.name %></h4></a>
+          <h3>By: <%= recipe.user.name %></h3>
+        </div>
+        <div class="col-7">
+          <p>Total food items: <%= recipe.foods.count %></p>
+          <p>Total price: $<%= recipe.foods.sum { |food| food.price * food.quantity }  %></p>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="d-flex mt-5 pt-5 text-secondary">
+      <h2>You have no public recipes</h2>
+    </div>
+  <% end %>
+</div>
